@@ -45,3 +45,7 @@ Requirements
 
 This plugin requires the Lighthouse-API plugin found here: http://github.com/Caged/lighthouse-api/
 or possibly here: http://lighthouseapp.com/api
+
+
+Copyright (c) 2009 RubyMiner LLC, released under the MIT license
+================================================================

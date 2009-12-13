@@ -1,0 +1,64 @@
+<%= javascript_include_tag "lighthouse_tickets" %>
+<%= stylesheet_link_tag    "lighthouse_tickets" %>
+
+<div id="bug_button">
+   Revision: <%= LighthouseTickets::LighthouseTicket.revision %> | 
+  <%= link_to_function content_tag(:span, "Report Issue"), "LighthouseTicket.toggle('show')" %>
+</div>
+  
+  
+<div id="create_ticket_form" style="display:none;">
+  
+  <div style="float:right">
+    <%= link_to_function "close", "LighthouseTicket.toggle('hide')" %>
+	</div>
+
+  <% form_remote_tag :url => create_lighthouse_ticket_url do %>
+  
+	    <h2>Create a Lighthouse Ticket<%= " for " + LighthouseTickets::LighthouseTicket.site_name unless LighthouseTickets::LighthouseTicket.site_name.blank? %></h2>
+  		
+  		<!-- hidden fields that hold the parameters and other session information -->
+  		  <%= hidden_field_tag "ticket[location]", url_for(params) %>
+  		<!-- end hidden fields -->
+  		
+  		<div style="float:left;">
+  		  <span>Name</span>
+  		  <%= text_field_tag "ticket[name]", "", :id => "lighthouse_ticket_name_field", :maxsize => 140 %>  			
+  		</div>
+  		
+  		<div style="float:right;">
+  		  <span>Email Address</span>
+  		  <%= text_field_tag "ticket[email]", "", :id => "lighthouse_ticket_email_field", :maxsize => 140 %>  			  		  
+  		</div>
+  		
+  		<br style="clear:both;">
+  		
+  		<div id="lighthouse_ticket_title" class="field">
+  			<label>Title</label>
+  			<%= text_field_tag "ticket[title]", "", :id => "lighthouse_ticket_title_field", :maxsize => 140 %>
+  		</div>
+	    
+	    <div id="lighthouse_ticket_priority" class="field">
+  			<span>Priority</span>
+  			<%= select_tag "ticket[priority]", options_for_select(LighthouseTickets::LighthouseTicket::PRIORITIES), :class => "lighthouse_ticket_priority_field" %>
+  			<span>Category</span>
+  			<%= select_tag "ticket[category]", options_for_select(LighthouseTickets::LighthouseTicket::CATEGORIES), :class => "lighthouse_ticket_category_field" %>
+  		</div>
+  		
+  		<div id="lighthouse_ticket_description" class="field">
+  			<label>Describe the problem</label>
+  			<%= text_area_tag "ticket[description]", "", :id => "lighthouse_ticket_description_field" %>
+  		</div>
+  		
+  		<div id="submitting_ticket" style="display:none">
+  			Submitting ticket...
+  		</div>
+  		
+  		<div id="submit_ticket">
+  		  <%= submit_tag "Register Ticket", :class => "submit_button" %> or
+  		  <%= link_to_function "Cancel", "LighthouseTicket.toggle('hide')"%>
+  		</div>
+  		
+  <% end %>
+
+</div>

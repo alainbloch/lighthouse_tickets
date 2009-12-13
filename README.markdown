@@ -1,21 +1,47 @@
-QuickTicket
-===========
+Credit where it's due
+=====================
+A lot of the inspiration, code and text for this plugin is borrowed (with much respect) from the QuickTicket plugin developed by Iterative Designs LLC. Check them out!
 
-QuickTicket is a Rails plugin that utilizes the Lighthouse API to provide ticket creation within a Rails application. This will create a little icon on the bottom right of the application screen (which scrolls) that will display a pane when clicked. This will allow the user to provide their comments/issues/bug into  the pane which is then submitted to your Lighthouse account for the project.
+LightHouse Tickets
+===================
+
+LightHouse Tickets is a Rails plugin that utilizes the Lighthouse API to provide ticket creation within a Rails application. 
+This will create a little icon on the bottom right of the application screen (which scrolls) that will display a pane when clicked. 
+This will allow the user to provide their comments/issues/bug into  the pane which is then submitted to your Lighthouse account for the project.
 
 What gets installed
 ===================
 
-Once you have the plugin installed, you will find the following two new assets created into your application
+Once you have the plugin installed, you will find the following three new assets created into your application
 
-* ./public/stylesheets/quickticket.css - This holds the default (and configurable) styling for the application, update it as you see fit or configure it not to be loaded.
-* ./public/javascripts/quickticket.js  - This holds the necessary javascript, written to work with the Prototype library. You can enhance or modify it (switch to jQuery) but keep the namespace and methods the same.
+* ./public/stylesheets/lighthouse_tickets.css   - This holds the default (and configurable) styling for the application, update it as you see fit or configure it not to be loaded.
+* ./public/javascripts/lighthouse_tickets.js    - This holds the necessary javascript, written to work with the Prototype library.
+* ./app/views/lighthouse_tickets/_form.html.erb - A view directory is created, which holds the form used to submit tickets to Lighthouse. This is created and placed here so it can be edited to your discretion.
 
-Also new parameters have been added to your environment.rb file which will allow you to configure QuickTicket. You should probably go update those now, otherwise it will act like its working, but fail.
+Modify your configuration
+=========================
 
-What you need to do
-===================
+New parameters have been added to your environment.rb file which will allow you to configure LightHouse Tickets. 
+You need to modify these now.
 
-It feels dirty adding routes to your application, so we are just going to make you do it. This route will just allow the app to call back into the lighthouse ticket controller, which IF the environment is correct, will execute, otherwise it will redirect back. Essentially said, if someone tries to access the route when not in the right environment, the system will block it (p0wn3d). So make sure you add this line to your routes.rb file:
+Add this to your Routes
+=======================
 
-map.create\_ticket "create\_ticket", :controller=>"quick_tickets", :action=>"create"
+Add this route. This route will allow the app to call the creation method in the lighthouse ticket controller:
+
+map.create_lighthouse_ticket "create_lighthouse_ticket", :controller=>"lighthouse_tickets", :action=>"create"
+
+Add this to your View
+=====================
+
+Then you must add the following code to your layout or any view you want to add your ticket form:
+
+<%= add_lighthouse_ticket_form %>
+
+...AND YOUR DONE!
+
+Requirements
+============
+
+This plugin requires the Lighthouse-API plugin found here: http://github.com/Caged/lighthouse-api/
+or possibly here: http://lighthouseapp.com/api
